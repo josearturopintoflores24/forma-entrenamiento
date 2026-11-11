@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMA · Entrenamiento para la Salud</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5F0E8;
+    --dark: #1A1A18;
+    --olive: #6B7C4D;
+    --rust: #C85A2E;
+    --sand: #D4C4A0;
+    --muted: #7A7A72;
+    --white: #FAFAF7;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(107,124,77,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.15em;
+    color: var(--dark);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--rust); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rust); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'FORMA';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32vw;
+    position: absolute; right: -4vw; top: 50%;
+    transform: translateY(-50%);
+    color: var(--sand); opacity: 0.25;
+    pointer-events: none; user-select: none;
+    letter-spacing: -0.02em;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--olive); color: var(--white);
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.35rem 0.9rem; border-radius: 2rem;
+    margin-bottom: 1.5rem; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--rust);
+    display: block;
+  }
+  .hero p {
+    font-size: 1.05rem; line-height: 1.75;
+    color: var(--muted); max-width: 420px;
+    font-weight: 300; margin-bottom: 2.5rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--dark); color: var(--cream);
+    padding: 0.85rem 2rem; border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.25s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--rust); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--dark);
+    padding: 0.85rem 2rem; border: 1.5px solid var(--dark); border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.25s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--rust); color: var(--rust); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+    align-self: center;
+    margin-top: 1rem;
+  }
+  .hero-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    max-width: 420px;
+  }
+  .mini-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 12px; padding: 1rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    overflow: hidden;
+  }
+  .mini-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .mini-card:nth-child(2) { margin-top: 2rem; }
+  .mini-card:nth-child(3) { margin-top: -1rem; }
+  .mini-card img {
+    width: 100%; height: 140px; object-fit: cover;
+    border-radius: 8px; display: block;
+  }
+  .mini-card .icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .mini-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.05em; margin-bottom: 0.3rem;
+  }
+  .mini-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before {
+    content: ''; width: 2rem; height: 1.5px; background: var(--rust);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em; line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+  .section-desc {
+    font-size: 1rem; color: var(--muted); line-height: 1.75;
+    max-width: 550px; font-weight: 300; margin-bottom: 3.5rem;
+  }
+
+  /* ── ESTIRAMIENTOS ── */
+  #estiramientos {
+    background: var(--white);
+    position: relative;
+  }
+  #estiramientos::after {
+    content: '';
+    position: absolute; right: 0; top: 0; bottom: 0; width: 35%;
+    background: linear-gradient(135deg, var(--olive) 0%, #4A5C34 100%);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: 0;
+  }
+  .stretch-inner {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: start;
+  }
+  .stretch-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stretch-card {
+    background: var(--cream); border-radius: 10px; padding: 1.4rem;
+    border: 1px solid rgba(107,124,77,0.2);
+    transition: transform 0.2s;
+  }
+  .stretch-card:hover { transform: scale(1.02); }
+  .stretch-card .duration {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--olive); font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .stretch-card h5 {
+    font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem;
+  }
+  .stretch-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── CALISTENIA ── */
+  #calistenia { background: var(--dark); color: var(--cream); }
+  #calistenia .section-title { color: var(--cream); }
+  #calistenia .section-desc { color: rgba(245,240,232,0.55); }
+  #calistenia .section-label { color: #A8C06E; }
+  #calistenia .section-label::before { background: #A8C06E; }
+
+  .cal-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+  .cal-levels { display: flex; flex-direction: column; gap: 0.8rem; }
+  .level-tab {
+    border: 1.5px solid rgba(245,240,232,0.12);
+    border-radius: 8px; padding: 1.2rem 1.5rem;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .level-tab:hover, .level-tab.active {
+    background: var(--olive); border-color: var(--olive);
+  }
+  .level-tab h5 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .level-tab p { font-size: 0.78rem; color: rgba(245,240,232,0.55); }
+  .level-tab.active p { color: rgba(245,240,232,0.8); }
+
+  .cal-exercises { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  .ex-card {
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 12px; padding: 1.6rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+  .ex-card:hover { border-color: var(--olive); transform: translateY(-3px); }
+  .ex-card .ex-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: rgba(245,240,232,0.06);
+    position: absolute; top: 0.5rem; right: 0.8rem; line-height: 1;
+  }
+  .ex-card .ex-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+  .ex-card h5 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .ex-card p { font-size: 0.8rem; color: rgba(245,240,232,0.5); line-height: 1.6; }
+  .ex-card .ex-sets {
+    margin-top: 1rem; font-size: 0.72rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #A8C06E; font-weight: 500;
+  }
+
+  /* ── GIMNASIO ── */
+  #gimnasio { background: var(--cream); }
+  .gym-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; }
+  .gym-days { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
+  .day-card {
+    border: 1.5px solid var(--sand); border-radius: 10px; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .day-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+  .day-header {
+    background: var(--dark); color: var(--cream);
+    padding: 0.9rem 1.2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .day-header h5 { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; }
+  .day-header span { font-size: 0.7rem; color: rgba(245,240,232,0.5); }
+  .day-body { padding: 1rem 1.2rem; background: var(--white); }
+  .day-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .day-body li {
+    font-size: 0.82rem; color: var(--muted);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .day-body li::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--rust); flex-shrink: 0;
+  }
+  .rest-card {
+    border: 1.5px dashed var(--sand); border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem 1rem; text-align: center;
+  }
+  .rest-card .rest-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .rest-card h5 { font-size: 0.85rem; color: var(--muted); font-weight: 400; }
+
+  .gym-tips { display: flex; flex-direction: column; gap: 1rem; }
+  .tip-card {
+    background: var(--dark); border-radius: 10px;
+    padding: 1.4rem; color: var(--cream);
+  }
+  .tip-card h5 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .tip-card p { font-size: 0.8rem; color: rgba(245,240,232,0.55); line-height: 1.6; }
+  .tip-icon { font-size: 1.3rem; margin-bottom: 0.6rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: var(--cream);
+    padding: 3rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 0.15em;
+  }
+  .footer-logo span { color: var(--rust); }
+  footer p { font-size: 0.8rem; color: rgba(245,240,232,0.4); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.7s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+    .hero::before { font-size: 50vw; opacity: 0.12; }
+    .hero-visual { margin-top: 2rem; }
+    section { padding: 5rem 2rem; }
+    .stretch-inner, .cal-layout, .gym-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    #estiramientos::after { display: none; }
+    .cal-exercises { grid-template-columns: 1fr 1fr; }
+    .gym-days { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">TU<span>CUERPO</span>EN FORMA</a>
+  <ul class="nav-links">
+    <li><a href="#estiramientos">Estiramientos</a></li>
+    <li><a href="#calistenia">Calistenia</a></li>
+    <li><a href="#gimnasio">Gimnasio</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <aside class="hero-text">
+    <span class="hero-badge fade-up">Entrenamiento · Salud · Bienestar</span>
+    <h1 class="fade-up delay-1">Tu cuerpo<em>en forma.</em></h1>
+    <p class="fade-up delay-2">Un programa de ejercicio físico diseñado para mejorar tu salud, aumentar tu fuerza y ganar flexibilidad desde cualquier nivel.</p>
+    <div class="hero-ctas fade-up delay-3">
+      <a href="#estiramientos" class="btn-primary">Comenzar ahora</a>
+      <a href="#gimnasio" class="btn-outline">Ver rutinas</a>
+    </div>
+  </aside>
+  <div class="hero-visual fade-up delay-4">
+    <section class="hero-cards">
+      <article class="mini-card">
+        <img src="imagenes/foto1.jpg" alt="Persona haciendo estiramientos" loading="lazy">
+        <h4>Estiramientos</h4>
+        <p>Movilidad y recuperación activa</p>
+      </article>
+      <article class="mini-card">
+        <img src="imagenes/foto2.jpg" alt="Persona practicando calistenia" loading="lazy">
+        <h4>Calistenia</h4>
+        <p>Fuerza con tu propio peso</p>
+      </article>
+      <article class="mini-card">
+        <img src="imagenes/foto3.jpg" alt="Grupo entrenando en el gimnasio" loading="lazy">
+        <h4>Gimnasio</h4>
+        <p>Rutinas con equipamiento</p>
+      </article>
+    </section>
+  </div>
+</section>
+
+<!-- ESTIRAMIENTOS -->
+<section id="estiramientos">
+  <div class="stretch-inner">
+    <div>
+      <p class="section-label">Sección 01</p>
+      <h2 class="section-title">Estiramientos</h2>
+      <p class="section-desc">La flexibilidad es la base de cualquier programa de salud. Los estiramientos mejoran el rango de movimiento, previenen lesiones y aceleran la recuperación muscular.</p>
+      <a href="#calistenia" class="btn-primary">Siguiente sección →</a>
+    </div>
+    <div class="stretch-grid">
+      <div class="stretch-card">
+        <p class="duration">30 seg · Matutino</p>
+        <h5>Estiramiento de cuello</h5>
+        <p>Alivia la tensión cervical y mejora la postura. Inclina la cabeza suavemente hacia cada lado.</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="stretch-card">
+        <p class="duration">45 seg · Cada lado</p>
+        <h5>Flexión de cadera</h5>
+        <p>Fundamental para quien pasa horas sentado. Estira el psoas y mejora la movilidad pélvica.</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="stretch-card">
+        <p class="duration">30 seg · Post entreno</p>
+        <h5>Apertura de pecho</h5>
+        <p>Contrarresta la postura encorvada. Entrelaza las manos detrás y abre el pecho hacia arriba.</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video3.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="stretch-card">
+        <p class="duration">40 seg · Cada lado</p>
+        <h5>Paloma de yoga</h5>
+        <p>Profundo estiramiento de glúteos y cadera exterior. Excelente para deportistas.</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video4.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="stretch-card">
+        <p class="duration">2 min · Nocturno</p>
+        <h5>Postura del niño</h5>
+        <p>Relaja la columna, los hombros y las caderas. Ideal para finalizar el día o el entreno.</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video5.mp4" type="video/mp4">
+        </video>
+      </div>
+        <div class="stretch-card">
+        <p class="duration">15 segundos · Nocturno</p>
+        <h5>Estiramiento de espalda</h5>
+        <p>Eleva un hombro colocarlo a 90°, y con la otra mano, ejerce presión sobre el codo ,estirando y mantenendo la tensión durante 15 segundos.Repite el movimiento tres veces</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video6.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALISTENIA -->
+<section id="calistenia">
+  <div class="cal-layout">
+    <div>
+      <p class="section-label">Sección 02</p>
+      <h2 class="section-title">Calistenia</h2>
+      <p class="section-desc">Construye fuerza real usando solo el peso de tu cuerpo. Sin equipamiento, sin excusas. La calistenia desarrolla músculo funcional, coordinación y control corporal.</p>
+    </div>
+    <div class="cal-exercises">
+      <div class="ex-card">
+        <span class="ex-num">01</span>
+        <div class="ex-icon">🙆</div>
+        <h5>Flexiones</h5>
+        <p>Pecho, hombros y tríceps. El movimiento de empuje fundamental.</p>
+        <p class="ex-sets">3 × 10–15 reps</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video7.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="ex-card">
+        <span class="ex-num">02</span>
+        <div class="ex-icon">🦵</div>
+        <h5>Sentadillas</h5>
+        <p>Cuádriceps, glúteos e isquiotibiales. Rey del tren inferior.</p>
+        <p class="ex-sets">4 × 15–20 reps</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video8.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="ex-card">
+        <span class="ex-num">03</span>
+        <div class="ex-icon">🧱</div>
+        <h5>Planchas</h5>
+        <p>Core completo. Estabilidad espinal y fuerza isométrica.</p>
+        <p class="ex-sets">3 × 30–60 seg</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video9.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="ex-card">
+        <span class="ex-num">04</span>
+        <div class="ex-icon">🔼</div>
+        <h5>Fondos con sillas</h5>
+        <p>Tríceps y pecho inferior. Requiere silla resistente.</p>
+        <p class="ex-sets">3 × 8–12 reps</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video10.mp4" type="video/mp4">
+        </video>
+      </div>
+    <div class="ex-card">
+        <span class="ex-num">05</span>
+        <div class="ex-icon">🏃</div>
+        <h5>Burpees</h5>
+        <p>cuerpo completo explosivo. Cardio y fuerza en un solo movimiento.</p>
+        <p class="ex-sets">3 × 8–10 reps</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video11.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="ex-card">
+        <span class="ex-num">06</span>
+        <div class="ex-icon">🦶</div>
+        <h5>Zancadas</h5>
+        <p>Glúteos, cuádriceps y equilibrio. Alterna con cada pierna.</p>
+        <p class="ex-sets">3 × 12 cada lado</p>
+        <video width="100%" height="auto" controls>
+          <source src="videos/video12.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GIMNASIO -->
+<section id="gimnasio">
+  <p class="section-label">Sección 03</p>
+  <h2 class="section-title">Gimnasio</h2>
+  <p class="section-desc">Un programa semanal de 6 días con equipamiento. Cada sesión está diseñada para optimizar la recuperación muscular y maximizar los resultados a largo plazo.</p>
+  <div class="gym-layout">
+    <div>
+      <div class="gym-days">
+        <div class="day-card">
+          <div class="day-header"><h5>Lunes</h5><span>Pecho + Tríceps</span></div>
+          <div class="day-body"><ul>
+            <li>Press banca plano 4×8</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video13.mp4" type="video/mp4">
+        </video>
+            <li>Press inclinado 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video14.mp4" type="video/mp4">
+        </video>
+            <li>Aperturas con mancuernas 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video15.mp4" type="video/mp4">
+        </video>
+            <li>Extensiones tríceps 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video16.mp4" type="video/mp4">
+        </video>
+            <li>Fondos en paralelas 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video17.mp4" type="video/mp4">
+        </video>
+          </ul></div>
+        </div>
+        <div class="day-card">
+          <div class="day-header"><h5>Martes</h5><span>Espalda + Bíceps</span></div>
+          <div class="day-body"><ul>
+            <li>Peso muerto 4×6</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video18.mp4" type="video/mp4">
+        </video>
+            <li>Remo con barra 4×8</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video19.mp4" type="video/mp4">
+        </video>
+            <li>Jalón al pecho 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video20.mp4" type="video/mp4">
+        </video>
+            <li>Curl con barra 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video21.mp4" type="video/mp4">
+        </video>
+            <li>Curl martillo 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video22.mp4" type="video/mp4">
+        </video>
+          </ul></div>
+        </div>
+        <div class="day-card">
+          <div class="day-header"><h5>Miércoles</h5><span>Pierna completa</span></div>
+          <div class="day-body"><ul>
+            <li>Sentadilla libre 5×5</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video23.mp4" type="video/mp4">
+        </video>
+            <li>Prensa de piernas 4×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video24.mp4" type="video/mp4">
+        </video>
+            <li>Extensión cuádriceps 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video25.mp4" type="video/mp4">
+        </video>
+            <li>Curl femoral 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video26.mp4" type="video/mp4">
+        </video>
+            <li>Gemelos de pie 4×15</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video27.mp4" type="video/mp4">
+        </video>
+          </ul></div>
+        </div>
+        <div class="day-card">
+          <div class="day-header"><h5>Jueves</h5><span>Hombros + Trapecio</span></div>
+          <div class="day-body"><ul>
+            <li>Press militar 4×8</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video28.mp4" type="video/mp4">
+        </video>
+            <li>Elevaciones laterales 4×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video29.mp4" type="video/mp4">
+        </video>
+            <li>Pájaros 3×12</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video30.mp4" type="video/mp4">
+        </video>
+            <li>Encogimientos de hombros con barra 4×15</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video31.mp4" type="video/mp4">
+        </video>
+            <li>Face pull 3×15</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video32.mp4" type="video/mp4">
+        </video>
+          </ul></div>
+        </div>
+        <div class="day-card">
+          <div class="day-header"><h5>Viernes</h5><span>Full Body + Core</span></div>
+          <div class="day-body"><ul>
+            <li>Sentadilla búlgara 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video33.mp4" type="video/mp4">
+        </video>
+            <li>Remo unilateral 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video34.mp4" type="video/mp4">
+        </video>
+            <li>Plancha 3×45 seg</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video35.mp4" type="video/mp4">
+        </video>
+            <li>Rueda abdominal 3×10</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video36.mp4" type="video/mp4">
+        </video>
+            <li>Elevaciones de piernas 3×15</li>
+            <video width="100%" height="auto" controls>
+          <source src="videos/video37.mp4" type="video/mp4">
+        </video>
+          </ul></div>
+        </div>
+        <div class="rest-card">
+          <div class="rest-icon">🌙</div>
+          <h5>Sábado · Descanso activo</h5>
+        </div>
+      </div>
+    </div>
+    <div class="gym-tips">
+      <div class="tip-card">
+        <div class="tip-icon">💧</div>
+        <h5>Hidratación</h5>
+        <p>Bebe al menos 2.5L de agua al día. Aumenta a 3L en días de entreno intenso.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">😴</div>
+        <h5>Descanso</h5>
+        <p>El músculo crece durante el sueño. Prioriza 7–9 horas de calidad cada noche.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🥗</div>
+        <h5>Nutrición</h5>
+        <p>Consume proteína de calidad en cada comida. Apunta a 1.6–2g por kg de peso corporal.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📈</div>
+        <h5>Progresión</h5>
+        <p>Aumenta el peso o las repeticiones gradualmente. La progresión constante es la clave del resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FOR<span>M</span>A</div>
+  <p>© 2026 · Entrenamiento para la Salud · Todos los derechos reservados</p>
+</footer>
+
+<script>
+  // Level tabs interaction
+  document.querySelectorAll('.level-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.stretch-card, .ex-card, .day-card, .tip-card, .mini-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
